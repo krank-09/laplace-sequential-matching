@@ -1,0 +1,4 @@
+greedy: primary 0.389, 95% seed-bootstrap CI [0.306, 0.500], MSMI events 14
+random: primary 0.278, 95% seed-bootstrap CI [0.139, 0.444], MSMI events 10
+no_asks: primary 0.139, 95% seed-bootstrap CI [0.056, 0.222], MSMI events 5
+paired greedy-random: 0.111, 95% CI [-0.028, 0.250]

@@ -4,3 +4,5 @@ __pycache__/
 results/
 .env
 .env.*
+workshop-material/
+.DS_Store
