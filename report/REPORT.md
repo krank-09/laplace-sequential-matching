@@ -250,7 +250,7 @@ Decision-time predictions were stored in policy memory and scored against mature
 | Joint P(both Yes \| both responded) = p_ab·p_ba | 5295 | 0.248 | 0.263 | 0.1943 (0.1940) | 0.052 |
 | Reciprocal P(MSMI) = pair value v | 8935 | 0.008 | 0.011 | 0.0107 (0.0107) | 0.005 |
 
-**Directional estimates.** Well calibrated in the middle of the range, but overconfident at the top: the highest decile predicts 0.70 and observes 0.55. Discrimination is weak: the observed rate rises only from about 0.41 to 0.55 across deciles, and the Brier score (0.2497) is no better than a constant rate (0.2492).
+**Directional estimates.** Well calibrated in the middle of the range, but overconfident at the top: the highest decile predicts 0.70 and observes 0.55. Discrimination is weak: the observed rate rises only from about 0.36 to 0.55 across deciles, and the Brier score (0.2497) is no better than a constant rate (0.2492).
 
 **Joint estimates.** The product of directional estimates is *not* an adequate joint model. The two directions' residuals are positively correlated within a pair (+0.16), so a shared pair component exists. The product is too low for low-value pairs (0.08 predicted vs 0.15 observed) and too high for the top decile (0.49 vs 0.37). A pair-level random effect or a direct joint model is the fix.
 
