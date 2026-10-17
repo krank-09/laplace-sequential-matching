@@ -1,0 +1,67 @@
+{
+  "description": "Weak-prior means fitted on declared training rollouts; refit online every call.",
+  "training_seeds": "1000-1059",
+  "variants": [
+    "development",
+    "sparse",
+    "cold_start",
+    "delayed",
+    "shift",
+    "drift"
+  ],
+  "episodes": 360,
+  "accept_rows": 41964,
+  "success_rows": 4046,
+  "success_events": 308,
+  "feature_names": [
+    "intercept",
+    "relationship_goal",
+    "relationship_pace",
+    "lifestyle",
+    "conversations",
+    "emotional_availability",
+    "space_for_relationship",
+    "relocate"
+  ],
+  "accept_mean": [
+    -0.0038,
+    0.3826,
+    0.2893,
+    0.0936,
+    0.1314,
+    0.0206,
+    -0.0334,
+    0.0147
+  ],
+  "accept_sd": [
+    0.0099,
+    0.0133,
+    0.0135,
+    0.0136,
+    0.0135,
+    0.0135,
+    0.0137,
+    0.0137
+  ],
+  "success_mean": [
+    -2.524,
+    0.0989,
+    -0.1062,
+    -0.0116,
+    -0.0131,
+    -0.0907,
+    0.0157,
+    0.0264
+  ],
+  "success_sd": [
+    0.0593,
+    0.0788,
+    0.0797,
+    0.0807,
+    0.0802,
+    0.0804,
+    0.0805,
+    0.0809
+  ],
+  "response_rate": 0.7573
+}

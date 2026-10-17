@@ -2,3 +2,7 @@
 !kit.py
 !policy.py
 !Dockerfile
+!laplace/
+!laplace/*.py
+!laplace/priors.json
+laplace/__pycache__

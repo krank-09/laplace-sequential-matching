@@ -1,3 +1,78 @@
+# Team Laplace: Sequential Matching Problem
+
+**Team:** Laplace · **Member:** Kumar Ankit · Final build for the IIT Madras x Romeo & Juliet / Vouchsafe Sequential Matching hackathon (kit release 1.0.0).
+
+The policy decides who to clarify, who to introduce and when to wait, using only the observable JSON state. It has four layers, each in its own module.
+
+1. **Normalise** (`laplace/observe.py`). Builds the feasible candidate graph using the kit's reciprocal `eligibility`, availability and the no-repeat rule. It also derives matured feedback labels. Pending outcomes are censored, and a missing response is never read as a No.
+2. **Model** (`laplace/model.py`). Estimates directional acceptance from three-state soft-field agreement plus member effects, along with response propensities and a post-acceptance success factor. Every call refits from the episode's feedback by MAP / Laplace updates around weak priors.
+3. **Decide.**
+   - `laplace/asks.py` ranks constraint bundles by how many partners they unlock and skips members with a declined hard field. It spends the leftover budget on high-weight soft fields.
+   - `laplace/matching.py` runs a general-graph maximum-weight matching: greedy, then local improvement.
+4. **Validate** (`laplace/core.py`). Re-checks every ask and pair before output. On any exception it falls back to an empty action, which is always valid.
+
+The full write-up is in [`report/REPORT.md`](report/REPORT.md) and [`report/REPORT.pdf`](report/REPORT.pdf).
+
+## Environment
+
+- **Inference:** Python 3.10+ standard library only. The image is `python:3.12.7-slim` (`Dockerfile`), with no pip packages and no network.
+- **Training asset:** `laplace/priors.json` holds weak-prior means, produced by `scripts/fit_priors.py`.
+- **Development-only tools** (never in the image): SciPy ≥1.9 / NumPy for the exact matching reference, used by `scripts/exact_matching.py` and `scripts/matching_gap.py`. All other scripts are stdlib.
+- **Inference random seed:** Thompson draws use `random.Random(1000003 * day + 17)`. That makes the policy deterministic, so identical states give identical actions.
+
+## Declared seeds
+
+| Purpose | Seeds | Variants |
+|---|---|---|
+| Training (prior means only) | 1000–1059 | all six |
+| Validation (design choices, ablations) | 2000–2019 | all six |
+| Reporting (fresh, final tables) | 101–120 | all six |
+
+Static day-30 pools in `data/` were used only for exploration; the manifest split is unchanged. No policy reads hidden simulator fields, seeds or organiser files.
+
+## Reproduce
+
+```bash
+python3 -m unittest -v                      # kit tests + test_laplace.py
+python3 verify_data.py
+# Official harness, subprocess mode (local entry point ignores the --baseline flag evaluate.py appends):
+python3 evaluate.py --policy laplace_policy.py --seeds 101,102,103 --variants all --output results/laplace_check.json
+# Baselines through the same harness:
+python3 evaluate.py --baseline greedy --seeds 101 --output results/greedy_check.json
+# Container mode (the assessed configuration):
+docker build -t sequential-policy:laplace .
+python3 evaluate.py --image sequential-policy:laplace --seeds 101 --output results/container_check.json
+# Fast in-process harness (identical actions, verified by action digests) and the full experiment set:
+python3 scripts/fit_priors.py                              # regenerates laplace/priors.json (~11 min, 8 cores)
+python3 scripts/run_ablations.py --set validation
+python3 scripts/run_ablations.py --set reporting --keep
+python3 scripts/analyse.py --set reporting
+python3 scripts/calibration.py --run results/reporting/full.json
+python3 scripts/matching_gap.py --output results/matching_gap.json   # needs SciPy
+```
+
+`python3 policy.py` (no arguments, as in the container) runs the Laplace policy. `--baseline greedy|no_asks|random` runs the supplied baselines. Ablation overrides use `LAPLACE_CFG='{"online": false}'` (keys are listed in `laplace/core.py`).
+
+## Layout
+
+| Path | Contents |
+|---|---|
+| `policy.py`, `laplace/` | Submitted policy and its prior asset |
+| `laplace_policy.py` | Local entry point for `evaluate.py --policy` |
+| `test_laplace.py` | Validity, censoring, matching, memory and timing checks |
+| `scripts/` | Fast harness, prior fitting, ablations, analysis, calibration, matching gap |
+| `results/` | Machine-readable episode results (validation, reporting, baselines) |
+| `report/` | Technical report |
+| `research/` | Round 1 research note |
+
+## Licence and provenance
+
+The starter kit is MIT-licensed (`LICENSE`), and the synthetic data falls under `DATA_LICENSE.md`. Team Laplace's own code and report are © 2026 Kumar Ankit and released under the MIT licence (see `LICENSE-LAPLACE`). AI coding assistance (Anthropic's Claude, via Claude Code) was used during development. All results were produced by the scripts above.
+
+---
+
+# Original participant kit README
+
 # The Sequential Matching Problem
 
 **Final participant release 1.0.0 | Vouchsafe | 5 October 2026**
