@@ -1,6 +1,6 @@
-# Team Laplace: Sequential Matching Problem
+# Sequential Matching Problem
 
-**Team:** Laplace · **Member:** Kumar Ankit · Final build for the IIT Madras x Romeo & Juliet / Vouchsafe Sequential Matching hackathon (kit release 1.0.0).
+**Final build for the IIT Madras x Romeo & Juliet / Vouchsafe Sequential Matching hackathon (kit release 1.0.0).
 
 The policy decides who to clarify, who to introduce and when to wait, using only the observable JSON state. It has four layers, each in its own module.
 
